@@ -5,9 +5,7 @@ import java.io.IOException;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
-
 
 
 @WebService(endpointInterface = "com.ztech.web.service.html.HtmlWebService")

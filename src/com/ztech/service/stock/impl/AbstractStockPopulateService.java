@@ -5,7 +5,9 @@ import javax.xml.ws.Service;
 import com.ztech.service.stock.StockPopulateService;
 import com.ztech.stock.dao.AssetDao;
 import com.ztech.stock.dao.IncomeDao;
+import com.ztech.stock.dao.IndustryDao;
 import com.ztech.stock.dao.LiabilityDao;
+import com.ztech.stock.dao.SectorDao;
 import com.ztech.stock.dao.StockDao;
 import com.ztech.web.service.HtmlWebServiceFactory;
 import com.ztech.web.service.WebServiceFactory;
@@ -14,11 +16,13 @@ import com.ztech.web.service.html.HtmlWebService;
 
 public abstract class AbstractStockPopulateService implements StockPopulateService{
 
-	static final int HTML_PAGE_REQUEST_INTERVAL = 10000;
+	static final int HTML_PAGE_REQUEST_INTERVAL = 3000;
 	StockDao stockDao;
 	IncomeDao incomeDao;
 	AssetDao assetDao;
 	LiabilityDao liabilityDao;
+	SectorDao sectorDao;
+	IndustryDao industryDao; 
 	
 	@Override
 	public void populateStockDatabse() {}
@@ -39,6 +43,14 @@ public abstract class AbstractStockPopulateService implements StockPopulateServi
 		this.liabilityDao = liabilityDao;
 	}
 
+	public void setSectorDao(SectorDao sectorDao) {
+		this.sectorDao = sectorDao;
+	}
+	
+	public void setIndustryDao(IndustryDao industryDao) {
+		this.industryDao = industryDao;
+	}
+	
 	public HtmlWebService getHtmlWebService() {
 		WebServiceFactory fac = new HtmlWebServiceFactory();
 		Service service = fac.obtainService();

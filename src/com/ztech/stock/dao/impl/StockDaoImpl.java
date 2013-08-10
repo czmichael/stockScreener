@@ -3,13 +3,10 @@ package com.ztech.stock.dao.impl;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.mail.internet.ParameterList;
-
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.ztech.stock.dao.StockDao;
-import com.ztech.stock.database.model.Asset;
 import com.ztech.stock.database.model.Stock;
 import com.ztech.stock.util.QueryParam;
 

@@ -11,6 +11,7 @@ import com.ztech.stock.database.model.Stock;
 public class StockInfoPopulateServiceImpl extends AbstractStockPopulateService  {
 
 	private KeyStatPopulateService keyStatPopulateService;
+	private SectorIndustryPopulateService sectorIndustryPopulateService;
 	private IncomePopulateService incomePopulateService;
 	private BalanceSheetPopulateService balanceSheetPopulateService;
 	
@@ -24,7 +25,7 @@ public class StockInfoPopulateServiceImpl extends AbstractStockPopulateService  
 		
 		// Populate other fields
 		List<Stock> stockList = stockDao.getAllStocks();
-String startSymbol = "CWBS";
+String startSymbol = "FBN";
 boolean found = false;
 		for (Stock stock: stockList) {
 			
@@ -36,12 +37,16 @@ if (! stock.getSymbol().equals(startSymbol) && ! found) {
 			keyStatPopulateService.populateKeyStat(stock);
 			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
 			
+			sectorIndustryPopulateService.populateSectorIndustry(stock);
+			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
+			
 			incomePopulateService.populateIncome(stock);
 			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
 
 			balanceSheetPopulateService.populateAssetAndLiability(stock);
 			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
 
+			
 
 //break;
 		}
@@ -49,6 +54,11 @@ if (! stock.getSymbol().equals(startSymbol) && ! found) {
 	
 	public void setKeyStatPopulateService(KeyStatPopulateService keyStatPopulateService) {
 		this.keyStatPopulateService = keyStatPopulateService;
+	}
+
+	public void setSectorIndustryPopulateService(
+			SectorIndustryPopulateService sectorIndustryPopulateService) {
+		this.sectorIndustryPopulateService = sectorIndustryPopulateService;
 	}
 	
 	public void setIncomePopulateService(IncomePopulateService incomePopulateService) {
@@ -67,4 +77,6 @@ if (! stock.getSymbol().equals(startSymbol) && ! found) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		((StockInfoPopulateServiceImpl) ctx.getBean("stockInfoPopulateService")).populateStockDatabse();
 	}
+
+
 }

@@ -1,11 +1,11 @@
 package com.ztech.stock.database.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Entity;
@@ -32,6 +32,8 @@ public class Stock {
 	private List<Asset> assetList = new ArrayList<Asset>();
 	private List<Liability> liabilityList = new ArrayList<Liability>();
 	private double currentAssetLiabilityRatio = 0.0;
+	private Sector sector;
+	private Industry industry;
 	
 	
 	@javax.persistence.Id
@@ -159,5 +161,26 @@ public class Stock {
 				this.getMarketCap(), this.getPricePerBook(),
 				this.getPricePerEarning(), this.getYield(),
 				this.getPayOutRatio(), this.getCurrentAssetLiabilityRatio());
+	}
+
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sector_id", nullable = true)
+	public Sector getSector() {
+		return sector;
+	}
+
+	public void setSector(Sector sector) {
+		this.sector = sector;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "industry_id", nullable = true)
+	public Industry getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(Industry industry) {
+		this.industry = industry;
 	}
 }
