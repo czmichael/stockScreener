@@ -19,7 +19,6 @@ public class NyseStockPopulateService extends AbstractStockPopulateService {
 	public void populate() {
 		Character curAlphabet = 'A', lastAlphabet = 'Z';
 //curAlphabet = 'Q';
-		
 		StringBuilder nysePageUrl;
 		// Loop through all companies listing page starting from letter 'A' 
 		while (curAlphabet <= lastAlphabet) {
