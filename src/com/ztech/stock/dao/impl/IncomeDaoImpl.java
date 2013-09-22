@@ -1,5 +1,6 @@
 package com.ztech.stock.dao.impl;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,11 +14,29 @@ import org.hibernate.criterion.Restrictions;
 
 import com.ztech.stock.dao.IncomeDao;
 import com.ztech.stock.database.model.Income;
+import com.ztech.stock.database.model.Stock;
 
 
 public class IncomeDaoImpl extends HibernateDaoSupport implements IncomeDao {
 	
 	private Logger logger = Logger.getLogger(IncomeDaoImpl.class);
+	
+	public Income getIncomeByStockAndYear(final Stock stock, final Date year) {
+		List<Income> incomeList = 
+				(List<Income>) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				return session.createCriteria(Income.class)
+       						  .add(Restrictions.eq("year", year))
+      			  			  .add(Restrictions.eq("stock", stock))
+      						  .list();
+			}
+		});
+		if (incomeList.size() > 0) {
+			return incomeList.get(0);
+		}
+		return null;
+	}
 	
 	public void saveIncome(final Income income) {
 		// The following might become stored procedure

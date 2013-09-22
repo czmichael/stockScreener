@@ -25,7 +25,6 @@ public class SectorIndustryPopulateService extends StockInfoPopulateServiceImpl 
 			return;
 		}
 		Document doc = Jsoup.parse(htmlDocString);
-//System.out.println(htmlDocString);		
 		try {
 			
 			Element sectorHead = doc.select("th:containsOwn(Sector:)").first();
@@ -53,6 +52,6 @@ public class SectorIndustryPopulateService extends StockInfoPopulateServiceImpl 
 		} catch (Exception e) {
 			logger.warn("stock: " + stock.getSymbol() + " Sector/Industry information error.");
 		}
-		
+		AbstractStockPopulateService.pause();
 	}
 }

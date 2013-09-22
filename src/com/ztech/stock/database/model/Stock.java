@@ -156,11 +156,22 @@ public class Stock {
 
 	@Override
 	public String toString() {
-		return String.format("%-40s %-9s %,20d %8s %8s %8s %8s %8.2f", 
-				this.getCompany(), this.getSymbol(), 
-				this.getMarketCap(), this.getPricePerBook(),
-				this.getPricePerEarning(), this.getYield(),
-				this.getPayOutRatio(), this.getCurrentAssetLiabilityRatio());
+		String industryName = "";
+		if (this.getIndustry() != null) {
+			industryName = this.getIndustry().getName();
+		}
+		return String.format("%-40s %-40s %-9s %,20d %8s %8s %8s %8s %10.2f", 
+				this.getCompany(), 
+				industryName,
+				this.getSymbol(), 
+				this.getMarketCap(), 
+				this.getPricePerBook(),
+				this.getPricePerEarning(), 
+				this.getYield(),
+				this.getPayOutRatio(), 
+				this.getCurrentAssetLiabilityRatio()
+				);
+		
 	}
 
 	

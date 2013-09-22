@@ -77,6 +77,7 @@ public class KeyStatPopulateService extends StockInfoPopulateServiceImpl {
 			stock.setPayOutRatio(payOutRatio);
 			stockDao.updateStock(stock);
 		}
+		AbstractStockPopulateService.pause();
 	}
 
 	private long convertMarketCap(String marketCapString) {

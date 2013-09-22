@@ -25,12 +25,10 @@ public class StockScreen {
 	
 	public boolean isStockPass(Stock stock) {
 		boolean isPass = true;
-System.out.println("\n\nstock: " + stock.getSymbol());		
 		for (StockScreenCriteria criteria: screenCriteriaList) {
 
 			// If any one criteria fails, fail the stock.
 			if (! criteria.isStockPass(stock)) {
-System.out.println("stock :" + stock.getSymbol() + " failed on " + criteria.getClass().toString());				
 				isPass = false;
 				break;
 			}

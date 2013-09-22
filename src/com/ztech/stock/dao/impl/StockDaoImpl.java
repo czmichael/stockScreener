@@ -88,6 +88,8 @@ public class StockDaoImpl extends HibernateDaoSupport implements StockDao {
 				criteria.addOrder(Order.asc(orderByField));
 				List<Stock> stockList = criteria.list();
 				for (Stock stock: stockList) {
+					Hibernate.initialize(stock.getIndustry());
+					Hibernate.initialize(stock.getSector());
 					Hibernate.initialize(stock.getAssetList());
 					Hibernate.initialize(stock.getIncomeList());
 					Hibernate.initialize(stock.getLiabilityList());

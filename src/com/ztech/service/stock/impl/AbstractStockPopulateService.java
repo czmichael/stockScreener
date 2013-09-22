@@ -1,5 +1,7 @@
 package com.ztech.service.stock.impl;
 
+import java.util.Random;
+
 import javax.xml.ws.Service;
 
 import com.ztech.service.stock.StockPopulateService;
@@ -16,7 +18,7 @@ import com.ztech.web.service.html.HtmlWebService;
 
 public abstract class AbstractStockPopulateService implements StockPopulateService{
 
-	static final int HTML_PAGE_REQUEST_INTERVAL = 3000;
+	static final int HTML_PAGE_REQUEST_INTERVAL = 4000;
 	StockDao stockDao;
 	IncomeDao incomeDao;
 	AssetDao assetDao;
@@ -57,9 +59,9 @@ public abstract class AbstractStockPopulateService implements StockPopulateServi
 		return service.getPort(HtmlWebService.class);
 	}
 
-	public static void pause(int pauseTimeInMicroSec) {
+	public static void pause() {
 		try {
-			Thread.sleep(pauseTimeInMicroSec);
+			Thread.sleep((new Random()).nextInt(HTML_PAGE_REQUEST_INTERVAL) );
 		} catch (InterruptedException e) {} 
 	}
 	

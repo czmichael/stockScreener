@@ -10,11 +10,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.ztech.stock.dao.AssetDao;
 import com.ztech.stock.database.model.Asset;
-import com.ztech.stock.database.model.Income;
 import com.ztech.stock.database.model.Liability;
 import com.ztech.stock.database.model.Stock;
+
 
 public class BalanceSheetPopulateService extends StockInfoPopulateServiceImpl {
 	
@@ -85,6 +84,7 @@ public class BalanceSheetPopulateService extends StockInfoPopulateServiceImpl {
 				}
 			}
 		}
+		AbstractStockPopulateService.pause();
 	}
 	
 	private void saveAsset(String year, long amount, Stock stock) {

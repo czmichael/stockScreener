@@ -24,7 +24,6 @@
 //			for (int i = 0; i < incomeList.size() - 1; i++) {
 //				double prevIncome = incomeList.get(i).getNetIncome();
 //				double currIncome = incomeList.get(i+1).getNetIncome();
-//System.out.println("prev income: " + prevIncome + "   curr asset:  " + currIncome + "    growth rate:  " + ((currIncome - prevIncome) / prevIncome) + " < " + growthPercentage + " is ture?");
 //				if (prevIncome > 0 && currIncome > 0) {
 //					yearToYearGrowthRate = (currIncome - prevIncome) / prevIncome;
 //					if (yearToYearGrowthRate < growthPercentage) {

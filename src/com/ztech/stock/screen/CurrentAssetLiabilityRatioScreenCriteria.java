@@ -21,7 +21,6 @@ public class CurrentAssetLiabilityRatioScreenCriteria implements StockScreenCrit
 			if (asset.getYear().compareTo(liability.getYear()) == 0) {
 				long currentAsset = asset.getTotalCurrentAsset();
 				long currentliability = liability.getTotalCurrentLiability();
-System.out.println("stock " + stock.getSymbol() + " asset liability ratio: " + (double) currentAsset / (double) currentliability);					
 				if (currentAsset > 0 && currentliability > 0) {
 					double ratio = (double) currentAsset / (double) currentliability;
 					stock.setCurrentAssetLiabilityRatio(ratio);
@@ -29,9 +28,6 @@ System.out.println("stock " + stock.getSymbol() + " asset liability ratio: " + (
 				}
 			}
 		}
-if (isPass) {
-	System.out.println("stock: " + stock.getSymbol() + " passed " + this.getClass().toString());
-}		
 		return isPass;
 	}
 

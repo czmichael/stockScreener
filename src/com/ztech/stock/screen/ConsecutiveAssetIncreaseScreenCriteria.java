@@ -17,14 +17,11 @@ public class ConsecutiveAssetIncreaseScreenCriteria implements StockScreenCriter
 		List<Asset> assetList = stock.getAssetList();
 		Collections.sort(assetList, new DateComparator());
 
-//System.out.println("stock: " + stock.getSymbol() + " passed " + this.getClass().toString());			
 
 		if (assetList.size() > 2) {
-			boolean isPass = false;
 			for (int i = 0; i < assetList.size() - 1; i++) {
 				double prevAsset = assetList.get(i).getTotalCurrentAsset();
 				double currAsset = assetList.get(i+1).getTotalCurrentAsset();
-System.out.println("prev asset: " + prevAsset + "   curr asset:  " + currAsset + "    growth rate:  " + ((currAsset - prevAsset) / prevAsset) + " < " + growthPercentage + " is ture?");
 				if (prevAsset > 0 && currAsset > 0) {
 					yearToYearGrowthRate = (currAsset - prevAsset) / prevAsset;
 					if (yearToYearGrowthRate < growthPercentage) {

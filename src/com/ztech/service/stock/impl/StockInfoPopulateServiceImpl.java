@@ -2,53 +2,49 @@ package com.ztech.service.stock.impl;
 
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.apache.log4j.Logger;
 
 import com.ztech.stock.database.model.Stock;
+import com.ztech.stock.util.OperationalMode;
 
 
 public class StockInfoPopulateServiceImpl extends AbstractStockPopulateService  {
 
+	private Logger logger = Logger.getLogger(StockInfoPopulateServiceImpl.class);
+	protected String operationalMode = null;
+	private String startSymbol = null;
 	private KeyStatPopulateService keyStatPopulateService;
 	private SectorIndustryPopulateService sectorIndustryPopulateService;
 	private IncomePopulateService incomePopulateService;
 	private BalanceSheetPopulateService balanceSheetPopulateService;
 	
+	
 	@Override
 	public void populateStockDatabse() {
-		// Populate stock symbols first
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-//		((NyseStockPopulateService) ctx.getBean("nyseStockPopulateService")).populate();
-//		((NasdaqStockPopulateService) ctx.getBean("nasdaqStockPopulateService")).populate();
-//		((AmexStockPopulateService) ctx.getBean("amexStockPopulateService")).populate();
+		boolean found = false;
 		
 		// Populate other fields
 		List<Stock> stockList = stockDao.getAllStocks();
-String startSymbol = "FBN";
-boolean found = false;
 		for (Stock stock: stockList) {
+			if (startSymbol != null && ! stock.getSymbol().equals(startSymbol) && ! found) {
+				logger.info("Skipping stock: " + stock.getSymbol());
+				continue;
+			} else {
+				found = true;
+			}	
 			
-if (! stock.getSymbol().equals(startSymbol) && ! found) {
-	continue;
-} else {
-	found = true;
-}	
 			keyStatPopulateService.populateKeyStat(stock);
-			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
-			
-			sectorIndustryPopulateService.populateSectorIndustry(stock);
-			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
-			
 			incomePopulateService.populateIncome(stock);
-			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
-
 			balanceSheetPopulateService.populateAssetAndLiability(stock);
-			AbstractStockPopulateService.pause(HTML_PAGE_REQUEST_INTERVAL);
-
 			
+			if (operationalMode.equals(OperationalMode.CREATE)) {
+				sectorIndustryPopulateService.populateSectorIndustry(stock);
+			}
 
-//break;
+			if (operationalMode.equals(OperationalMode.TEST)) {
+				logger.info("App in TEST mode, done.");
+				break;
+			}
 		}
 	}
 	
@@ -70,13 +66,19 @@ if (! stock.getSymbol().equals(startSymbol) && ! found) {
 		this.balanceSheetPopulateService = balanceSheetPopulateService;
 	}
 
-	/*
-	 * Test Main
-	 */
-	public static void main(String[] args) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		((StockInfoPopulateServiceImpl) ctx.getBean("stockInfoPopulateService")).populateStockDatabse();
+	public String getStartSymbol() {
+		return startSymbol;
 	}
 
+	public void setStartSymbol(String startSymbol) {
+		this.startSymbol = startSymbol;
+	}
 
+	public String getOperationalMode() {
+		return operationalMode;
+	}
+
+	public void setOperationalMode(String operationalMode) {
+		this.operationalMode = operationalMode;
+	}
 }
