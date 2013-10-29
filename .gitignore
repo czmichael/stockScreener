@@ -2,3 +2,4 @@
 *.class
 /.idea
 sandbox.iml
+bin/
